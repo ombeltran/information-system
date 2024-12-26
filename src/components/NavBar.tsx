@@ -1,16 +1,18 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import classNames from 'classnames';
 import Link from 'next/link';
 
 interface NavItem {
     name: string;
+    id: number
     subMenu?: string[];
 }
 
 const navBarList: NavItem[] = [
-    { name: 'Report forms', subMenu: ['Production', 'Labels', 'Documents'] },
-    { name: 'Tables', subMenu: ['Productivity', 'Missing Accessories', 'Labels', 'Documents', 'Products pending'] },
-    { name: 'Indicators' },
+    { id: 1, name: 'Report forms', subMenu: ['Production', 'Labels', 'Documents'] },
+    { id: 2, name: 'Tables', subMenu: ['Productivity', 'Missing Accessories', 'Labels', 'Documents', 'Products pending'] },
+    { id: 3, name: 'Indicators', subMenu: ['Hola', 'Oli'] },
 ];
 
 function NavBar() {
@@ -38,25 +40,33 @@ function NavBar() {
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
                                 {navBarList.map((item) => (
-                                    <Menu as="div" key={item.name} className="flex items-center">
-                                    <MenuButton className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">
-                                      {item.name}
-                                    </MenuButton>
-                                  
-                                    {item.subMenu && (
-                                      <MenuItems
-                                        transition
-                                        className="absolute left-[70px] top-[65px] bg-gray-700 text-gray-300 font-medium rounded-md pl-2 pr-3 py-2 text-base"
-                                      >
-                                        {item.subMenu.map((subItem, index) => (
-                                          <MenuItem key={index} as="div" className="mb-2 hover:text-white">
-                                            {subItem}
-                                          </MenuItem>
-                                        ))}
-                                      </MenuItems>
-                                    )}
-                                  </Menu>
-                                  
+                                    <Menu as="div" key={item.id} className="flex items-center">
+                                        <MenuButton className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">
+                                            {item.name}
+                                        </MenuButton>
+
+                                        {item.subMenu && (
+                                            <MenuItems
+                                                transition
+                                                // className="absolute left-[70px] top-[65px] bg-gray-700 text-gray-300 font-medium rounded-md pl-2 pr-3 py-2 text-base"
+                                                className={classNames(
+                                                    'absolute top-[65px] bg-gray-800 text-gray-300 font-medium rounded-md pl-2 pr-3 py-2 text-base',
+                                                    {
+                                                        'left-[70px]': item.id === 1,
+                                                        'left-[190px]': item.id === 2,
+                                                        'left-[270px]': item.id === 3,
+                                                    }
+                                                )}
+                                            >
+                                                {item.subMenu.map((subItem, index) => (
+                                                    <MenuItem key={index} as="div" className="mb-2 hover:text-white">
+                                                        {subItem}
+                                                    </MenuItem>
+                                                ))}
+                                            </MenuItems>
+                                        )}
+                                    </Menu>
+
                                 ))}
                             </div>
                         </div>
