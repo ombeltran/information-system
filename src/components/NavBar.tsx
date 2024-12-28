@@ -23,7 +23,8 @@ const navBarList: NavItem[] = [
             { name: 'Production', route: '/dashboard/forms/production' },
             { name: 'Labels', route: '/dashboard/forms/reqLabels' },
             { name: 'Documents', route: '/dashboard/forms/reqDcts' },
-            { name: 'Missing Accessories', route: '/dashboard/forms/production/missing' }]
+            { name: 'Missing Accessories', route: '/dashboard/forms/production/missing' },
+            { name: 'Reception', route: '/dashboard/forms/reception' }]
     },
     {
         id: 2, name: 'Tables',
