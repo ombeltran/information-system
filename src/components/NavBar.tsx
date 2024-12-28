@@ -1,21 +1,50 @@
+"use client"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface NavItem {
     name: string;
     id: number
-    subMenu?: string[];
+    subMenu?: SubMenuItem[];
+}
+
+interface SubMenuItem {
+    name: string;
+    route?: string;
 }
 
 const navBarList: NavItem[] = [
-    { id: 1, name: 'Report forms', subMenu: ['Production', 'Labels', 'Documents'] },
-    { id: 2, name: 'Tables', subMenu: ['Productivity', 'Missing Accessories', 'Labels', 'Documents', 'Products pending'] },
-    { id: 3, name: 'Indicators', subMenu: ['Hola', 'Oli'] },
+    {
+        id: 1, name: 'Report forms',
+        subMenu: [
+            { name: 'Production', route: '/dashboard/forms/production' },
+            { name: 'Labels', route: '/dashboard/forms/reqLabels' },
+            { name: 'Documents', route: '/dashboard/forms/reqDcts' },
+            { name: 'Missing Accessories', route: '/dashboard/forms/production/missing' }]
+    },
+    {
+        id: 2, name: 'Tables',
+        subMenu: [
+            { name: 'Productivity', route: '/dashboard/tables/production' },
+            { name: 'Missing Accessories', route: '/dashboard/tables/missing' },
+            { name: 'Labels', route: '/dashboard/tables/labels' },
+            { name: 'Documents', route: '/dashboard/tables/documents' },
+            { name: 'Products pending', route: '/dashboard/tables/pendingCheck' }]
+    },
+    {
+        id: 3, name: 'Indicators',
+        subMenu: [
+            { name: 'Service factor', route: '/' },
+            { name: 'Days of process', route: '/' }]
+    },
 ];
 
 function NavBar() {
+    const router = useRouter();
+
     return (
         <Disclosure as="nav" className="bg-gray-800">
             <div className="mx-auto px-2 sm:px-6 lg:px-8">
@@ -37,7 +66,7 @@ function NavBar() {
                                 className="h-8 w-auto"
                             />
                         </div>
-                        <div className="hidden sm:ml-6 sm:block">
+                        <div className="hidden sm:ml-6 sm:block z-50">
                             <div className="flex space-x-4">
                                 {navBarList.map((item) => (
                                     <Menu as="div" key={item.id} className="flex items-center">
@@ -48,7 +77,6 @@ function NavBar() {
                                         {item.subMenu && (
                                             <MenuItems
                                                 transition
-                                                // className="absolute left-[70px] top-[65px] bg-gray-700 text-gray-300 font-medium rounded-md pl-2 pr-3 py-2 text-base"
                                                 className={classNames(
                                                     'absolute top-[65px] bg-gray-800 text-gray-300 font-medium rounded-md pl-2 pr-3 py-2 text-base',
                                                     {
@@ -59,8 +87,13 @@ function NavBar() {
                                                 )}
                                             >
                                                 {item.subMenu.map((subItem, index) => (
-                                                    <MenuItem key={index} as="div" className="mb-2 hover:text-white">
-                                                        {subItem}
+                                                    <MenuItem
+                                                        key={index}
+                                                        as="div"
+                                                        className="mb-2 hover:text-white hover:cursor-pointer"
+                                                        onClick={() => subItem.route && router.push(subItem.route)}
+                                                    >
+                                                        {subItem.name}
                                                     </MenuItem>
                                                 ))}
                                             </MenuItems>
@@ -115,7 +148,7 @@ function NavBar() {
             <DisclosurePanel className="sm:hidden">
                 <div className="space-y-1 px-2 pb-3 pt-2">
                     <ul>
-                        {navBarList.map((item, id) => (
+                        {navBarList.map((item) => (
                             <li key={item.name} className="bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
                                 {item.name}
                             </li>

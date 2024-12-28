@@ -5,6 +5,8 @@ import Label from "@/components/Label";
 import TextArea from "@/components/TextArea";
 import Title from "@/components/Title";
 import { useState } from "react";
+import { BsTrash } from "react-icons/bs";
+import { TfiPencil } from "react-icons/tfi";
 
 interface Document {
   SerialNumber: string;
@@ -12,7 +14,8 @@ interface Document {
   Description: string;
 }
 
-function RequiringDocuments() {
+//RequiringLabels
+function RequiringLabels() {
   const [serialNumber, setSerialNumber] = useState<string>("");
   const [model, setModel] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -38,9 +41,9 @@ function RequiringDocuments() {
     <div className="flex mt-[100px] justify-center ">
       <form
         className="flex flex-col min-w-[800px] h-auto outline outline-2 -outline-offset-1 outline-gray-300 border-2 rounded-xl px-5 py-8"
-        onSubmit={(e) => e.preventDefault()} 
+        onSubmit={(e) => e.preventDefault()}
       >
-        <Title>Requiring Documents</Title>
+        <Title>Requiring Labels</Title>
         <div className="flex justify-between mt-6">
           <div>
             <Label>Serial Number</Label>
@@ -90,6 +93,13 @@ function RequiringDocuments() {
                   <p>
                     <strong>User:</strong> {"Anonymous"}
                   </p>
+                  <div className="flex justify-between w-full">
+                    <div></div>
+                    <div className="flex gap-3 mt-2">
+                      <BsTrash className="text-red-800 text-xl hover:scale-110" />
+                      <TfiPencil className="text-xl hover:scale-110"/>
+                    </div>
+                  </div>
                 </div>
               ))
             ) : (
@@ -102,4 +112,4 @@ function RequiringDocuments() {
   );
 }
 
-export default RequiringDocuments;
+export default RequiringLabels;

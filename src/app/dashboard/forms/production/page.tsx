@@ -22,7 +22,7 @@ function Report() {
     e.preventDefault();
 
     if (selectedCategory === "5") {
-      router.push('/dashboard/report/missing');
+      router.push('/dashboard/forms/production/missing');
     } else {
       alert("Report saved successfully");
       window.location.reload();

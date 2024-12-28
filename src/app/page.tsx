@@ -10,7 +10,7 @@ function Login() {
 
   const handleRedirection = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push('/dashboard/report'); // Navega a la página "/about"
+    router.push('/dashboard/home'); // Navega a la página "/about"
   };
 
   return (
