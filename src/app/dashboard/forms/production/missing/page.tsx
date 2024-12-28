@@ -55,7 +55,6 @@ function MissingAccessories() {
                         <div></div> {/*Div elemet used to move the button to right side*/}
                         <Button
                             type="button"
-                            className="py-1"
                             onClick={handleAddAccessory}
                         >
                             Add <strong className="text-xl">+</strong>
@@ -75,6 +74,10 @@ function MissingAccessories() {
                             ))}
                         </ul>
                     </div>
+                    {
+                        missingAccessoriesList.length > 0 && 
+                        <Button type="submit" className="mt-4">Save</Button>
+                    }
                 </div>
             </form>
         </div>
