@@ -23,7 +23,7 @@ const navBarList: NavItem[] = [
             { name: 'Production', route: '/dashboard/forms/production' },
             { name: 'Labels', route: '/dashboard/forms/reqLabels' },
             { name: 'Documents', route: '/dashboard/forms/reqDcts' },
-            { name: 'Missing Accessories', route: '/dashboard/forms/production/missing' },
+            // { name: 'Missing Accessories', route: '/dashboard/forms/production/missing' },
             { name: 'Reception', route: '/dashboard/forms/reception' }]
     },
     {
@@ -100,7 +100,6 @@ function NavBar() {
                                             </MenuItems>
                                         )}
                                     </Menu>
-
                                 ))}
                             </div>
                         </div>
@@ -148,13 +147,38 @@ function NavBar() {
 
             <DisclosurePanel className="sm:hidden">
                 <div className="space-y-1 px-2 pb-3 pt-2">
-                    <ul>
-                        {navBarList.map((item) => (
-                            <li key={item.name} className="bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                    {navBarList.map((item) => (
+                        <Menu as="div" key={item.id} className="flex items-center">
+                            <MenuButton className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">
                                 {item.name}
-                            </li>
-                        ))}
-                    </ul>
+                            </MenuButton>
+
+                            {item.subMenu && (
+                                <MenuItems
+                                    transition
+                                    className={classNames(
+                                        'absolute bg-gray-700 text-gray-300 font-medium rounded-md pl-2 pr-3 py-2 text-base',
+                                        {
+                                            'top-[80px] left-[120px]': item.id === 1,
+                                            'top-[120px] left-[120px]': item.id === 2,
+                                            'top-[160px] left-[120px]': item.id === 3,
+                                        }
+                                    )}
+                                >
+                                    {item.subMenu.map((subItem, index) => (
+                                        <MenuItem
+                                            key={index}
+                                            as="div"
+                                            className="mb-2 hover:text-white hover:cursor-pointer"
+                                            onClick={() => subItem.route && router.push(subItem.route)}
+                                        >
+                                            {subItem.name}
+                                        </MenuItem>
+                                    ))}
+                                </MenuItems>
+                            )}
+                        </Menu>
+                    ))}
                 </div>
             </DisclosurePanel>
         </Disclosure>

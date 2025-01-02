@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 
 interface TableProps {
     columns: string[];
-    data: string[][];
+    data: (string | number)[][];
 }
 
 function Table({ columns, data }: TableProps) {
