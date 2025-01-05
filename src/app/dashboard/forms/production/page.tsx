@@ -8,6 +8,7 @@ import Title from "@/components/Title";
 import Option from "@/components/Option";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
+import Form from "@/components/Form";
 
 function Report() {
   const router = useRouter();
@@ -30,9 +31,9 @@ function Report() {
   }
   return (
     <div className="flex mt-[100px] justify-center ">
-      <form
+      <Form
         onSubmit={handleSubmit}
-        className="flex flex-col min-w-[450px] h-auto outline outline-2 -outline-offset-1 outline-gray-300 border-2 rounded-xl px-5 py-8"
+        className="flex flex-col min-w-[450px] h-auto rounded-xl px-5 py-8"
       >
         <div className="mb-5">
           <Title> Production report </Title>
@@ -78,7 +79,7 @@ function Report() {
           <div></div> {/*Div elemet used to move the button to right side */}
           <Button type="submit">Save</Button>
         </div>
-      </form>
+      </Form>
     </div>
   )
 }

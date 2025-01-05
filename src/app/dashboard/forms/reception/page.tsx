@@ -1,5 +1,6 @@
 "use client"
 import Button from "@/components/Button";
+import Form from "@/components/Form";
 import Input from "@/components/Input";
 import Label from "@/components/Label";
 import TextArea from "@/components/TextArea";
@@ -28,9 +29,9 @@ function Reception() {
 
     return (
         <div className="flex mt-[100px] justify-center ">
-            <form
+            <Form
                 onSubmit={handleSubmit}
-                className="flex flex-col min-w-[450px] h-auto outline outline-2 -outline-offset-1 outline-gray-300 border-2 rounded-xl px-5 py-8 gap-7"
+                className="flex flex-col min-w-[450px] h-auto rounded-xl px-5 py-8 gap-7"
             >
                 <div>
                     <Title> Product register </Title>
@@ -74,7 +75,7 @@ function Reception() {
                     />
                     <Button type="submit">Save</Button>
                 </div>
-            </form>
+            </Form>
         </div>
     )
 }

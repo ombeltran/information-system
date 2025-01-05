@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/components/Button";
+import Form from "@/components/Form";
 import Input from "@/components/Input";
 import Label from "@/components/Label";
 import TextArea from "@/components/TextArea";
@@ -39,8 +40,8 @@ function RequiringDocuments() {
 
   return (
     <div className="flex mt-[100px] justify-center ">
-      <form
-        className="flex flex-col min-w-[800px] h-auto outline outline-2 -outline-offset-1 outline-gray-300 border-2 rounded-xl px-5 py-8"
+      <Form
+        className="flex flex-col min-w-[800px] h-auto rounded-xl px-5 py-8"
         onSubmit={(e) => e.preventDefault()}
       >
         <Title>Requiring Documents</Title>
@@ -107,7 +108,7 @@ function RequiringDocuments() {
             )}
           </div>
         </div>
-      </form>
+      </Form>
     </div>
   );
 }
