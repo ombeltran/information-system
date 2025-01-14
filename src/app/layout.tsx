@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Information System",
-  description: "Aplicarion for managment the information an information of returns and checked of electronics devices",
+  description: "Aplicarion for managment the information an area of returns and checked of electronics devices",
 };
 
 export default function RootLayout({
