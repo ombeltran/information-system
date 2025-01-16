@@ -28,6 +28,7 @@ function Login() {
           <div></div> 
           <Button type="submit">Login</Button>
         </div>
+        <p className="w-[300px] text-center font-bold text-red-700">This is a demo application, to access enter any username and any password</p>
       </Form>
     </div>
   );
