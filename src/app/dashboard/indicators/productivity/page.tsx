@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import Chart from "react-apexcharts";
+import dynamic from "next/dynamic";
 import { data } from "@/data/productivityData";
 import Table from "@/components/Table";
 import { ApexOptions } from "apexcharts";
+
+const ChartWithNoSSR = dynamic(() => import("react-apexcharts"), { ssr: false }); // Carga el gráfico solo en el cliente
 
 const columns: string[] = ["Name", "Serial Number", "Model", "Category", "Date"];
 
@@ -69,7 +71,7 @@ function ProductionTable() {
         <div className="container mx-auto p-4">
             <h1 className="text-center text-2xl font-bold mb-6">Report of Productivity</h1>
             <div className="flex justify-center">
-                <Chart
+                <ChartWithNoSSR
                     options={chartConfig.options}
                     series={chartConfig.series}
                     type="bar"
