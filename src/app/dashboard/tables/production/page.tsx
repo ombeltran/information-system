@@ -1,16 +1,8 @@
 import Table from "@/components/Table";
+import { data } from "@/data/productivityData";
 
 const columns: string[] = ["Name", "Serial Number", "Model", "Category", "Date"];
-const data: string[][] = [
-    ["Oscar Beltran", "123NHJNJ1231HJHJH", "Samsung_1", "Open box","12/28/2024"],
-    ["Oscar Beltran", "123NHJNJ1231HJHJH", "Samsung_2", "Open box", "12/28/2024"],
-    ["Oscar Beltran", "123NHJNJ1231HJHJH", "Samsung_3", "Open box", "12/28/2024"],
-    ["Oscar Beltran", "123NHJNJ1231HJHJH", "Samsung_4", "Open box", "12/28/2024"],
-    ["Silvestre", "123NHJNJ1231HJHJH", "Samsung_1", "Open box", "12/28/2024"],
-    ["Silvestre", "123NHJNJ1231HJHJH", "Samsung_2", "Open box", "12/28/2024"],
-    ["Silvestre", "123NHJNJ1231HJHJH", "Samsung_3", "Crack", "12/28/2024"],
-    ["Silvestre", "123NHJNJ1231HJHJH", "Samsung_4", "Defective", "12/28/2024"],
-];
+
 
 function ProductionTable() {
     return (

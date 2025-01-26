@@ -38,8 +38,8 @@ const navBarList: NavItem[] = [
     {
         id: 3, name: 'Indicators',
         subMenu: [
-            { name: 'Service factor', route: '/' },
-            { name: 'Days of process', route: '/' }]
+            { name: 'Service factor', route: '/dashboard/indicators/serviceFactor' },
+            { name: 'Productivity', route: '/dashboard/indicators/productivity' }]
     },
 ];
 
