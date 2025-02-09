@@ -24,7 +24,8 @@ const navBarList: NavItem[] = [
             { name: 'Labels', route: '/dashboard/forms/reqLabels' },
             { name: 'Documents', route: '/dashboard/forms/reqDcts' },
             // { name: 'Missing Accessories', route: '/dashboard/forms/production/missing' },
-            { name: 'Reception', route: '/dashboard/forms/reception' }]
+            { name: 'Reception', route: '/dashboard/forms/reception' },
+            {name: 'Claims', route: '/dashboard/forms/claims'}]
     },
     {
         id: 2, name: 'Tables',
@@ -63,8 +64,8 @@ function NavBar() {
                         <div className="flex shrink-0 items-center">
                             <img
                                 alt="Your Company"
-                                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                                className="h-8 w-auto"
+                                src="/company.jpg"
+                                className="h-10 w-auto rounded-full"
                             />
                         </div>
                         <div className="hidden sm:ml-6 sm:block z-50">
