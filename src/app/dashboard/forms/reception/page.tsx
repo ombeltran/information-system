@@ -25,6 +25,15 @@ function Reception() {
         window.location.reload();
     }
 
+    const listOptions = [
+        "Different item inside",
+        "Extra item inside",
+        "Physical problems",
+        "Defective functions",
+        "Damaged",
+        "Bound"
+    ]
+
     // function handleClick() {
     //     document.getElementById("fileInput")?.click();
     // }
@@ -41,10 +50,10 @@ function Reception() {
         <div className="flex mt-[100px] justify-center ">
             <Form
                 onSubmit={handleSubmit}
-                className="flex flex-col min-w-[1200px] h-auto rounded-xl px-5 py-8 gap-7"
+                className="flex flex-col min-w-[1200px] h-auto rounded-xl px-5 py-4 gap-7 mb-5"
             >
                 <div>
-                    <Title> Product register </Title>
+                    <Title> Product receiving </Title>
                 </div>
                 <div className="flex gap-20 w-full">
                     <div className="flex flex-col gap-5 w-full">
@@ -83,10 +92,11 @@ function Reception() {
                             className="categorySelection w-full py-1.5 pl-2 pr-3 font-bold text-base text-gray-400 placeholder:text-gray-400 outline outline-2 outline-gray-300 rounded-lg"
                         >
                             <Option value="" hidden>Trouble category</Option>
-                            <Option value="1">Different item inside</Option>
-                            <Option value="2">Physical problems</Option>
-                            <Option value="3">Defective functions</Option>
-                            <Option value="4">Damaged</Option>
+                            {
+                                listOptions.map((item, index) => (
+                                    <Option key={index} value={String(index)}>{item}</Option>
+                                ))
+                            }
                         </Select>
                     </div>
 

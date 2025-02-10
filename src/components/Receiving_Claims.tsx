@@ -31,7 +31,7 @@ function Receiving_Claims({ className, value }: Receiving_ClaimsProps) {
 
   return (
     <div className={`${className} flex flex-col gap-3 w-full`}>
-      {value === "1" && (
+      {["0"].includes(value) && (
         <>
           <div>
             <Title> Sold item </Title>
@@ -46,13 +46,13 @@ function Receiving_Claims({ className, value }: Receiving_ClaimsProps) {
           </div>
         </>
       )}
-      <div className="flex flex-col">
+      <div className="flex flex-col h-full">
         <Label>Details </Label>
         <div className="flex gap-2">
           <Input type="text" value={currentDetail} onChange={handleDetailChange} />
           <Button type="button" onClick={handleDetailClick}>+</Button>
         </div>
-        <div className={`outline outline-2 outline-gray-300 rounded-lg mb-2 mt-4 p-3 overflow-y-auto ${value !== "1" ? "h-[580px]" : "h-[383px]"}`}>
+        <div className="flex flex-col flex-1 outline outline-2 outline-gray-300 rounded-lg mb-2 mt-4 p-3 overflow-y-auto h-full">
           {detail.map((item, index) => (
             <div key={index} className="flex mt-1 items-center justify-between">
               <span>{item}</span>
