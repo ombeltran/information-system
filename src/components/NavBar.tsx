@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAppContext } from "@/context/AppContext";
 
 interface NavItem {
     name: string;
@@ -25,7 +26,7 @@ const navBarList: NavItem[] = [
             { name: 'Documents', route: '/dashboard/forms/reqDcts' },
             // { name: 'Missing Accessories', route: '/dashboard/forms/production/missing' },
             { name: 'Reception', route: '/dashboard/forms/reception' },
-            {name: 'Claims', route: '/dashboard/forms/claims'}]
+            { name: 'Claims', route: '/dashboard/forms/claims' }]
     },
     {
         id: 2, name: 'Tables',
@@ -46,6 +47,7 @@ const navBarList: NavItem[] = [
 
 function NavBar() {
     const router = useRouter();
+    const { user } = useAppContext();
 
     return (
         <Disclosure as="nav" className="bg-gray-800">
@@ -122,9 +124,9 @@ function NavBar() {
                                 <MenuItem>
                                     <a
                                         href="#"
-                                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                                        className="block px-4 py-2 font-bold text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                     >
-                                        Your Profile
+                                        {user}
                                     </a>
                                 </MenuItem>
                                 <MenuItem>

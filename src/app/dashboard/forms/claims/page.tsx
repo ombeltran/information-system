@@ -10,10 +10,13 @@ import Title from "@/components/Title";
 import { useState } from "react";
 import Receiving_Claims from "@/components/Receiving_Claims";
 import { FaSearch } from "react-icons/fa";
+import Template_Claims from "@/components/Template_Claims";
+import { useAppContext } from "@/context/AppContext";
 
 function Claims() {
 
   const [selectedCategory, setSelectedCategory] = useState("");
+  const {templateClaim, setTemplateClaim} = useAppContext();
 
   function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedCategory(e.target.value);
@@ -23,6 +26,22 @@ function Claims() {
     e.preventDefault();
     alert("Report saved successfully");
     window.location.reload();
+  }
+
+  function handleClick() {
+    document.getElementById("fileInput")?.click();
+  }
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files.length > 0) {
+      console.log("File selected:", e.target.files[0].name);
+    }
+
+    alert("File loaded and saved sucessfully");
+  }
+
+  function handleClickTemplate() {
+    setTemplateClaim(!templateClaim);
   }
 
   const listOptions = [
@@ -95,21 +114,35 @@ function Claims() {
             </Select>
           </div>
 
-          <Receiving_Claims value={selectedCategory} />
+          <div className="flex flex-col gap-4 w-full h-full">
+            <Receiving_Claims value={selectedCategory} />
 
+            <div className="flex justify-between gap-5">
+              <button type="button" onClick={handleClickTemplate} className="w-32 h-10 rounded-md text-white bg-indigo-600">Create claim</button>
+
+              <div className="flex gap-4 items-center">
+                <Label>Attach photos</Label>
+                <Button type="button" onClick={handleClick} className="scale-125 cursor-pointer">+</Button>
+                <input
+                  id="fileInput"
+                  type="file"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </div>
+
+            </div>
+          </div>
         </div>
 
         <div className="flex justify-between items-center h-[50px]">
           <div></div>
-          <div className="flex gap-36">
-            <div className="flex gap-4 items-center">
-              <Label>Attach photos</Label>
-              <Button type="button" className="scale-125">+</Button>
-            </div>
-            <Button type="submit" className="scale-125">Save</Button>
-          </div>
+          <Button type="submit" className="scale-125">Save</Button>
         </div>
       </Form>
+      {
+        templateClaim && <Template_Claims />
+      }
     </div>
   )
 }

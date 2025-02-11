@@ -30,7 +30,7 @@ function Receiving_Claims({ className, value }: Receiving_ClaimsProps) {
   }
 
   return (
-    <div className={`${className} flex flex-col gap-3 w-full`}>
+    <div className={`${className} flex flex-col gap-3 w-full h-full`}>
       {["0"].includes(value) && (
         <>
           <div>

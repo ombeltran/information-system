@@ -4,10 +4,11 @@ interface InputProps {
   className?: string; // `className` debe ser parte de las props y opcional
   required?: boolean; // `required` debe ser parte de las props y opcional
   value?: string; // `value` debe ser parte de las props y opcional
+  name?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // `onChange` debe ser parte de las props y opcional
 }
 
-function Input({ type, placeholder, className, required, value, onChange }: InputProps) {
+function Input({ type, placeholder, className, required, value, onChange, name }: InputProps) {
   return (
     <input
       type={type}
