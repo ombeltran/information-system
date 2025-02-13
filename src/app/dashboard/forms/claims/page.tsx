@@ -19,9 +19,8 @@ function Claims() {
   const [searchValue, setSearchValue] = useState("");
   const { templateClaim, setTemplateClaim } = useAppContext();
   const { setClaimDetail, setClaimSoldModel, setClaimSoldSN } = useAppContext();
-  const { receivedItem, setReceivedItem } = useAppContext() as {
+  const { receivedItem } = useAppContext() as {
     receivedItem: FormDataType[];
-    setReceivedItem: React.Dispatch<React.SetStateAction<FormDataType[]>>;
   };
 
   type FormDataType = {

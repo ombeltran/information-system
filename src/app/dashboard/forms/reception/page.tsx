@@ -15,14 +15,16 @@ import { listOptions } from "@/data/listOptions";
 function Reception() {
 
     const [selectedCategory, setSelectedCategory] = useState("");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [soldModel, setSoldModel] = useState("");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [soldSerialNumber, setSoldSerialNumber] = useState("");
     const { receivedItem, setReceivedItem } = useAppContext() as {
         receivedItem: FormDataType[];
         setReceivedItem: React.Dispatch<React.SetStateAction<FormDataType[]>>;
     };
     const {removeAllDetails, setRemoveAllDetails} = useAppContext();
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [details, setDetails] = useState<string[]>([]);
 
     type FormDataType = {
