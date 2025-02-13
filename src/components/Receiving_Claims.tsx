@@ -1,18 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import Label from "./Label";
 import Title from "./Title";
 import { BsTrash } from "react-icons/bs";
+import { useAppContext } from "@/context/AppContext";
 
 interface Receiving_ClaimsProps {
   className?: string;
   value: string;
+  onDetailsChange: (details: string[]) => void;
+  onSoldItemChange: (model: string, serial: string) => void;
 }
 
-function Receiving_Claims({ className, value }: Receiving_ClaimsProps) {
+function Receiving_Claims({ className, value, onDetailsChange, onSoldItemChange }: Receiving_ClaimsProps) {
   const [detail, setDetails] = useState<string[]>([]);
   const [currentDetail, setCurrentDetail] = useState<string>("");
+  const [soldModel, setSoldModel] = useState<string>("");
+  const [soldSerialNumber, setSoldSerialNumber] = useState<string>("");
+  const { removeAllDetails } = useAppContext();
+  const { claimDetail, claimSoldModel, claimSoldSN } = useAppContext();
 
   function handleDetailChange(e: React.ChangeEvent<HTMLInputElement>) {
     setCurrentDetail(e.target.value);
@@ -20,14 +27,44 @@ function Receiving_Claims({ className, value }: Receiving_ClaimsProps) {
 
   function handleDetailClick() {
     if (currentDetail.trim() !== "") {
-      setDetails([...detail, currentDetail]);
-      setCurrentDetail(""); // Clear input after adding
+      const newDetails = [...detail, currentDetail];
+      setDetails(newDetails);
+      setCurrentDetail("");
+      onDetailsChange(newDetails); // Notificar a Reception
     }
   }
 
   function removeDetail(index: number) {
-    setDetails(detail.filter((_, i) => i !== index));
+    const newDetails = detail.filter((_, i) => i !== index);
+    setDetails(newDetails);
+    onDetailsChange(newDetails); // Notificar a Reception
   }
+
+  function handleModelChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const model = e.target.value;
+    setSoldModel(model);
+    onSoldItemChange(model, soldSerialNumber); // Notificar al padre
+  }
+
+  function handleSerialChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const serial = e.target.value;
+    setSoldSerialNumber(serial);
+    onSoldItemChange(soldModel, serial); // Notificar al padre
+  }
+
+  useEffect(() => {
+    setDetails([]);
+    setCurrentDetail("");
+    () => onDetailsChange([]);
+  }, [removeAllDetails]);
+
+  useEffect(() => {
+    setDetails(claimDetail);
+    onDetailsChange(claimDetail);
+    setSoldModel(claimSoldModel);
+    setSoldSerialNumber(claimSoldSN);
+    onSoldItemChange(claimSoldModel, claimSoldSN);
+  }, [claimDetail, claimSoldModel, claimSoldSN]); // 🔹 Agregar dependencias
 
   return (
     <div className={`${className} flex flex-col gap-3 w-full h-full`}>
@@ -38,11 +75,21 @@ function Receiving_Claims({ className, value }: Receiving_ClaimsProps) {
           </div>
           <div className="flex flex-col">
             <Label>Model </Label>
-            <Input type="text" />
+            <Input
+              type="text"
+              name="soldModel"
+              value={soldModel}
+              onChange={handleModelChange}
+            />
           </div>
           <div className="flex flex-col">
             <Label>Serial Number </Label>
-            <Input type="text" />
+            <Input
+              type="text"
+              name="soldSerialNumber"
+              value={soldSerialNumber}
+              onChange={handleSerialChange}
+            />
           </div>
         </>
       )}
