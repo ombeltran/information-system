@@ -68,9 +68,9 @@ function Template_Claims(
                     <br />
                     <ul>
                         {details.map((item, index) => (
-                            <li 
-                            key={index}
-                            className="before:content-['✔'] before:mr-2 before:text-indigo-600"
+                            <li
+                                key={index}
+                                className="before:content-['✔'] before:mr-2 before:text-indigo-600"
                             >{item}</li>
                         ))}
                     </ul>
