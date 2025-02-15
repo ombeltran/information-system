@@ -1,13 +1,39 @@
 import Button from "./Button";
 import { useAppContext } from "@/context/AppContext";
 
-function Template_Claims() {
-    const {templateClaim, setTemplateClaim, user} = useAppContext();
+interface Template_ClaimsProps {
+    bxNumber: string;
+    trackingNumber: string;
+    model: string;
+    serialNumber: string;
+    upc: string;
+    comments: string;
+    category: string;
+    soldModel: string;
+    soldSerialNumber: string;
+    details: string[];
+}
+
+function Template_Claims(
+    {
+        bxNumber,
+        trackingNumber,
+        model,
+        serialNumber,
+        upc,
+        comments,
+        category,
+        soldModel,
+        soldSerialNumber,
+        details
+    }: Template_ClaimsProps) {
+    const { templateClaim, setTemplateClaim, user } = useAppContext();
+
 
     function handleClickTemplate() {
         setTemplateClaim(!templateClaim);
-      }
-    
+    }
+
     function handleSend() {
         alert("Email sent successfully");
         handleClickTemplate();
@@ -18,10 +44,43 @@ function Template_Claims() {
 
             <div className="subject flex gap-2 mb-8">
                 <p className="font-semibold">Subject:</p>
-                <h1 className="font-bold">CLAIM XXX PRODUCT BX 0000AA000B</h1>
+                <h1 className="font-bold">{`CLAIM ${model} BX ${bxNumber}`}</h1>
             </div>
             <div className="emailBody flex text-justify h-[700px]">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus vero et tempora asperiores, tenetur voluptatum vitae natus quae ipsa debitis ad beatae quaerat voluptates similique explicabo! Rerum doloremque consequuntur error molestias neque eveniet nemo non. Veniam illum esse non eaque sit porro dolor? Iste, fugit doloribus maiores corporis, facilis quo ad cum quia omnis et dolorem nobis. Reprehenderit repellat error natus soluta. Perferendis repellat necessitatibus iste corrupti distinctio reprehenderit a modi quasi neque, est accusamus adipisci quos expedita animi itaque minus fuga quod assumenda. Quas doloremque sapiente nesciunt perferendis ipsa placeat minus cumque, recusandae nostrum eum repudiandae voluptas facere. Accusantium.</p>
+                <div>
+                    <p>Dear Customer Service,</p>
+                    <br />
+                    <p>We have received a product with the following information:</p>
+                    <br />
+                    <ul>
+                        <li className="before:content-['✔'] before:mr-2 before:text-indigo-600">{`BX number ${bxNumber}`}</li>
+                        <li className="before:content-['✔'] before:mr-2 before:text-indigo-600">{`Tracking number ${trackingNumber}`}</li>
+                        <li className="before:content-['✔'] before:mr-2 before:text-indigo-600">{`Model ${model}`}</li>
+                        <li className="before:content-['✔'] before:mr-2 before:text-indigo-600">{`Serial number ${serialNumber}`}</li>
+                        <li className="before:content-['✔'] before:mr-2 before:text-indigo-600">{`UPC number ${upc}`}</li>
+                    </ul>
+                    <br />
+                    {(category === "Different item inside") ? (
+                        <p>{`Which arrives with ${category}, model ${soldModel} and serial number ${soldSerialNumber}. Items that has the following details:`}</p>) :
+                        (
+                            <p>{`Which arrives with ${category}, and also with the following details:`}</p>)
+                    }
+                    <br />
+                    <ul>
+                        {details.map((item, index) => (
+                            <li 
+                            key={index}
+                            className="before:content-['✔'] before:mr-2 before:text-indigo-600"
+                            >{item}</li>
+                        ))}
+                    </ul>
+                    <br />
+                    {
+                        (comments) && (
+                            <p>{`Additionally, please keep in mind that ${comments}`}</p>
+                        )
+                    }
+                </div>
             </div>
 
             <div className="signature flex flex-col justify-between h-24">

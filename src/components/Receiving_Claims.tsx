@@ -53,22 +53,32 @@ function Receiving_Claims({ className, value, onDetailsChange, onSoldItemChange 
   }
 
   useEffect(() => {
-    setDetails([]);
-    setCurrentDetail("");
-    () => onDetailsChange([]);
+    if (removeAllDetails) {
+      setDetails([]);
+      setCurrentDetail("");
+      onDetailsChange([]);  // ✅ Llamar correctamente
+    }
   }, [removeAllDetails]);
 
   useEffect(() => {
-    setDetails(claimDetail);
-    onDetailsChange(claimDetail);
+    if (removeAllDetails) {
+      setDetails([]);
+      setCurrentDetail("");
+      onDetailsChange([]);  // ✅ Llamar correctamente
+    }
+  }, [removeAllDetails]);
+
+  useEffect(() => {
     setSoldModel(claimSoldModel);
     setSoldSerialNumber(claimSoldSN);
-    onSoldItemChange(claimSoldModel, claimSoldSN);
-  }, [claimDetail, claimSoldModel, claimSoldSN]); // 🔹 Agregar dependencias
+    setDetails(claimDetail);
+    
+  }, [claimSoldModel, claimSoldSN, claimDetail]);
 
+  
   return (
     <div className={`${className} flex flex-col gap-3 w-full h-full`}>
-      {["0"].includes(value) && (
+      { value === "Different item inside" && (
         <>
           <div>
             <Title> Sold item </Title>

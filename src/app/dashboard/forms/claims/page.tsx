@@ -18,7 +18,7 @@ function Claims() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const { templateClaim, setTemplateClaim } = useAppContext();
-  const { setClaimDetail, setClaimSoldModel, setClaimSoldSN } = useAppContext();
+  const { setClaimDetail,claimSoldModel ,setClaimSoldModel ,claimSoldSN , setClaimSoldSN } = useAppContext();
   const { receivedItem } = useAppContext() as {
     receivedItem: FormDataType[];
   };
@@ -59,17 +59,17 @@ function Claims() {
     setClaimSoldSN(serial);
   }
 
-  useEffect(() => {
-    if (claimData.category !== "") {
-      setSelectedCategory(claimData.category);
-    }
-  }, [claimData.category]);
+  // useEffect(() => {
+  //   if (claimData.category !== "") {
+  //     setSelectedCategory(claimData.category);
+  //   }
+  // }, [claimData.category]);
 
-  useEffect(() => {
-    if(claimData.details.length > 0){
-      setClaimDetail(claimData.details)
-    }
-  }, [claimData.details]);
+  // useEffect(() => {
+  //   if (claimData.details.length > 0) {
+  //     setClaimDetail(claimData.details)
+  //   }
+  // }, [claimData.details]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -96,26 +96,30 @@ function Claims() {
     if (Array.isArray(receivedItem)) {
       const foundItem = receivedItem.find((item) => item.bxNumber === searchValue);
       if (foundItem) {
-        setClaimData(foundItem);
+        // setClaimData({ ...foundItem });
+        setClaimData(JSON.parse(JSON.stringify(foundItem)));
         setSelectedCategory(foundItem.category);
         setClaimSoldModel(foundItem.soldModel || "");
         setClaimSoldSN(foundItem.soldSerialNumber || "");
-        console.log("Found Model:", foundItem.soldModel);
-        console.log("Found Serial:", foundItem.soldSerialNumber);
+        setClaimDetail(foundItem.details || []);
       } else {
         console.log("Item not found");
       }
     } else {
       console.error("receivedItem is not an array");
     }
-  }  
+  }
 
   function handleChangeInputs(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) {
     const { name, value } = e.target;
-    setClaimData({ ...claimData, [name]: value });
+    // setClaimData({ ...claimData, [name]: value });
+    setClaimData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   }
 
-  function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
+  function handleCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newCategory = e.target.value;
 
     listOptions.find((item, index) => {
@@ -125,7 +129,7 @@ function Claims() {
     });
 
     setSelectedCategory(newCategory);
-    setClaimData({ ...claimData, category: newCategory }); // Asegura que claimData también se actualice
+    setClaimData({ ...claimData, category: newCategory }); 
   }
 
   return (
@@ -158,6 +162,7 @@ function Claims() {
               <Label>BX Number</Label>
               <Input
                 type="text"
+                name="bxNumber"
                 value={claimData.bxNumber}
                 onChange={handleChangeInputs}
               />
@@ -166,6 +171,7 @@ function Claims() {
               <Label>Tracking Number</Label>
               <Input
                 type="text"
+                name="trackingNumber"
                 value={claimData.trackingNumber}
                 onChange={handleChangeInputs}
               />
@@ -178,6 +184,7 @@ function Claims() {
               <Label>Model</Label>
               <Input
                 type="text"
+                name="model"
                 value={claimData.model}
                 onChange={handleChangeInputs}
               />
@@ -186,6 +193,7 @@ function Claims() {
               <Label>Serial Number</Label>
               <Input
                 type="text"
+                name="serialNumber"
                 value={claimData.serialNumber}
                 onChange={handleChangeInputs}
               />
@@ -194,6 +202,7 @@ function Claims() {
               <Label>UPC</Label>
               <Input
                 type="text"
+                name="upc"
                 value={claimData.upc}
                 onChange={handleChangeInputs}
               />
@@ -202,29 +211,34 @@ function Claims() {
               <Label>Comments</Label>
               <TextArea
                 className="mb-2"
+                name="comments"
                 value={claimData.comments}
                 onChange={handleChangeInputs}
               />
             </div>
-            <Select
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-              className="categorySelection w-full py-1.5 pl-2 pr-3 font-bold text-base text-gray-400 placeholder:text-gray-400 outline outline-2 outline-gray-300 rounded-lg"
-            >
-              <Option value="" hidden>
-                Trouble category
-              </Option>
-              {listOptions.map((item, index) => (
-                <Option key={index} value={String(index)}>
-                  {item}
-                </Option>
-              ))}
-            </Select>
+            <div>
+              <Label>Trouble Category</Label>
+              <Input
+                type="text"
+                list="options"
+                name="category"
+                value={selectedCategory}
+                // value={claimData.category}
+                onChange={handleCategoryChange}
+              />
+              <datalist id="options">
+                {
+                  listOptions.map((item, index) => (
+                    <option key={index} value={item} />
+                  ))
+                }
+              </datalist>
+            </div>
           </div>
 
           <div className="flex flex-col gap-4 w-full h-full">
             <Receiving_Claims
-              value={selectedCategory}            
+              value={selectedCategory}
               onDetailsChange={handleDetailsChange}
               onSoldItemChange={handleSoldItemChange}
             />
@@ -260,7 +274,19 @@ function Claims() {
           </Button>
         </div>
       </Form>
-      {templateClaim && <Template_Claims />}
+      {templateClaim && 
+      <Template_Claims
+        bxNumber={claimData.bxNumber}
+        trackingNumber={claimData.trackingNumber}
+        model={claimData.model}
+        serialNumber={claimData.serialNumber}
+        upc={claimData.upc}
+        comments={claimData.comments}
+        category={claimData.category}
+        soldModel={claimSoldModel}
+        soldSerialNumber={claimSoldSN}
+        details={claimData.details}
+      />}
     </div>
   );
 }

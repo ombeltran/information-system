@@ -3,8 +3,6 @@ import Button from "@/components/Button";
 import Form from "@/components/Form";
 import Input from "@/components/Input";
 import Label from "@/components/Label";
-import Option from "@/components/Option";
-import Select from "@/components/Select";
 import TextArea from "@/components/TextArea";
 import Title from "@/components/Title";
 import { useEffect, useState } from "react";
@@ -80,11 +78,12 @@ function Reception() {
         }))
     }
 
-    function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        const index = Number(e.target.value);
-        const category = listOptions[index] || "";
+    function handleCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
+        // const index = Number(e.target.value);
+        // const category = listOptions[index] || "";
+        const category = e.target.value;
 
-        setSelectedCategory(e.target.value);
+        setSelectedCategory(category);
 
         setFormData((prevData) => ({
             ...prevData,
@@ -97,8 +96,10 @@ function Reception() {
     }
 
     useEffect(() => {
-        {removeAllDetails && removeDetails()}
-    }, []);
+        if (removeAllDetails) {
+            removeDetails();
+        }
+    }, [removeAllDetails]);
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -203,19 +204,23 @@ function Reception() {
                                 value={formData.comments}
                                 onChange={handleInputChange}
                             />
-                        </div>
-                        <Select
+                        </div>                        
+                        <div>
+                            <Label>Trouble Category</Label>
+                            <Input 
+                            type="text" 
+                            list="options"
                             value={selectedCategory}
                             onChange={handleCategoryChange}
-                            className="categorySelection w-full py-1.5 pl-2 pr-3 font-bold text-base text-gray-400 placeholder:text-gray-400 outline outline-2 outline-gray-300 rounded-lg"
-                        >
-                            <Option value="" hidden>Trouble category</Option>
-                            {
-                                listOptions.map((item, index) => (
-                                    <Option key={index} value={String(index)}>{item}</Option>
-                                ))
-                            }
-                        </Select>
+                            />
+                            <datalist id="options">
+                                {
+                                    listOptions.map((item, index) => (
+                                        <option key={index} value={item}/>
+                                    ))
+                                }
+                            </datalist>
+                        </div>
                     </div>
 
                     <Receiving_Claims
@@ -223,6 +228,7 @@ function Reception() {
                         onDetailsChange={handleDetailsChange}
                         onSoldItemChange={handleSoldItemChange}
                     />
+
                 </div>
 
                 <div className="flex justify-between items-center h-[50px]">
